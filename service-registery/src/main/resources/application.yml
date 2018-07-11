@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: service-registry
+server:
+  port: 8000
+eureka:
+  instance:
+    hostname: localhost
+    secure-port: ${server.port}
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+zuul:
+  routes:
+    invoice-service:
+      path: /invoice-service/**
+      url: http://localhost:8002
+    milestone-service:
+      path: /milestone-service/**
+      url: http://localhost:8001
+  prefix: /api
